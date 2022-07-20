@@ -1,7 +1,7 @@
 const express = require("express");
-const bodyParser = require("body-parser");
 const mongodb = require("mongodb");
-const amqp = require("amqplib");
+const amqp = require('amqplib');
+const bodyParser = require("body-parser");
 
 if (!process.env.DBHOST) {
     throw new Error("Please specify the databse host using environment variable DBHOST.");
@@ -66,11 +66,17 @@ function setupHandlers(app, db, messageChannel) {
             });
     };
 
-    return messageChannel.assertQueue("viewed", {}) // Assert that we have a "viewed" queue.
+    return messageChannel.assertExchange("viewed", "fanout") // Assert that we have a "viewed" exchange.
         .then(() => {
-            console.log("Asserted that the 'viewed' queue exists.");
-
-            return messageChannel.consume("viewed", consumeViewedMessage); // Start receiving messages from the "viewed" queue.
+            return messageChannel.assertQueue("", { exclusive: true }); // Create an anonyous queue.
+        })
+        .then(response => {
+            const queueName = response.queue;
+            console.log(`Created queue ${queueName}, binding it to "viewed" exchange.`);
+            return messageChannel.bindQueue(queueName, "viewed", "") // Bind the queue to the exchange.
+                .then(() => {
+                    return messageChannel.consume(queueName, consumeViewedMessage); // Start receiving messages from the anonymous queue.
+                });
         });
 }
 
@@ -94,8 +100,6 @@ function startHttpServer(db, messageChannel) {
 // Application entry point.
 //
 function main() {
-    console.log("Hello world!");
-
     return connectDb()                                          // Connect to the database...
         .then(db => {                                           // then...
             return connectRabbit()                              // connect to RabbitMQ...
@@ -110,4 +114,4 @@ main()
     .catch(err => {
         console.error("Microservice failed to start.");
         console.error(err && err.stack || err);
-    });    
+    });
