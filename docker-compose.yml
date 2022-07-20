@@ -72,3 +72,24 @@ services:
     depends_on:
       - rabbit
     restart: "no"
+
+  recommendations:
+    image: recommendations
+    build:
+      context: ./recommendations
+      dockerfile: Dockerfile-dev
+    container_name: recommendations
+    volumes:
+      - /tmp/recommendations/npm-cache:/root/.npm:z
+      - ./recommendations/src:/usr/src/app/src:z
+    ports:
+      - "4003:80"
+    environment:
+      - PORT=80
+      - RABBIT=amqp://guest:guest@rabbit:5672
+      - DBHOST=mongodb://seotube-mongo:0PEWRLvlOPvHQw9iQUvX9pzKE5TLq8wawnWbABq4aA7qs2QIkapIHZUdIaBmCuFBGnbbFLc0OeipobSxPh3ISQ==@seotube-mongo.mongo.cosmos.azure.com:10255/?ssl=true&retrywrites=false&maxIdleTimeMS=120000&appName=@seotube-mongo@
+      - DBNAME=recommendations
+      - NODE_ENV=development
+    depends_on:
+      - rabbit
+    restart: "no"
