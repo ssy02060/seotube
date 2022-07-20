@@ -105,4 +105,10 @@ dist
 
 docker-compose.yml
 
-./working
+working/
+
+scripts/.terraform/
+scripts/terraform.tfstate.backup
+scripts/terraform.tfstate
+scripts/.terraform.tfstate.lock.info
+scripts/.terraform.lock.hcl
