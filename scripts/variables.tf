@@ -11,6 +11,10 @@ variable "admin_username" {
   default = "seo"
 }
 
+variable "app_version" { # Can't be called version! That's a reserved word.
+  default = "latest"
+}
+
 variable "client_id" {
 
 }

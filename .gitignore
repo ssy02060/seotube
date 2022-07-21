@@ -113,3 +113,4 @@ scripts/terraform.tfstate
 scripts/.terraform.tfstate.lock.info
 scripts/.terraform.lock.hcl
 scripts/apply.sh
+scripts/destroy.sh
