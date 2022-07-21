@@ -114,3 +114,4 @@ scripts/.terraform.tfstate.lock.info
 scripts/.terraform.lock.hcl
 scripts/apply.sh
 scripts/destroy.sh
+docker-compose.yml

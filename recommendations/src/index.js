@@ -23,7 +23,7 @@ const RABBIT = process.env.RABBIT;
 // Connect to the database.
 //
 function connectDb() {
-    return mongodb.MongoClient.connect(DBHOST) 
+    return mongodb.MongoClient.connect(DBHOST)
         .then(client => {
             return client.db(DBNAME);
         });
