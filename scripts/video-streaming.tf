@@ -1,5 +1,7 @@
 # Deploys the Video streaming microservice to the Kubernetes cluster.
-
+#---------------------------------------------------------------------#
+# push 까지의 자동화
+#---------------------------------------------------------------------#
 locals {
   service_name = "video-streaming"
   login_server = azurerm_container_registry.container_registry.login_server
@@ -44,7 +46,9 @@ resource "null_resource" "docker_push" {
     command = "docker push ${local.image_tag}"
   }
 }
-
+#---------------------------------------------------------------------#
+# 컨테이너 레지스트리 인증 자동화
+#---------------------------------------------------------------------#
 locals {
   dockercreds = {
     auths = {
@@ -66,7 +70,9 @@ resource "kubernetes_secret" "docker_credentials" {
 
   type = "kubernetes.io/dockerconfigjson"
 }
-
+#---------------------------------------------------------------------#
+# 마이크로 서비스 배포 자동화
+#---------------------------------------------------------------------#
 resource "kubernetes_deployment" "service_deployment" {
 
   depends_on = [null_resource.docker_push]
