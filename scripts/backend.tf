@@ -11,7 +11,7 @@
 # }
 terraform {
   backend "azurerm" {
-    resource_group_name  = "tfstate"
+    resource_group_name  = "seotube-test"
     storage_account_name = "seotubeterraform"
     container_name       = "tfstate"
     key                  = "terraform.tfstate"
