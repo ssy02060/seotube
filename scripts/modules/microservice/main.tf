@@ -98,7 +98,7 @@ resource "kubernetes_deployment" "service_deployment" {
     }
 
     spec {
-        replicas = 1
+        replicas = 2
 
         selector {
             match_labels = {

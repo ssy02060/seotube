@@ -12,7 +12,8 @@
   "license": "MIT",
   "dependencies": {
     "express": "^4.17.1",
-    "hbs": "^4.1.0"
+    "hbs": "^4.1.0",
+    "wait-port": "0.3.0"
   },
   "devDependencies": {
     "nodemon": "^1.19.1"
