@@ -26,6 +26,7 @@ jobs:
       ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
       STORAGE_ACCOUNT_NAME: ${{ secrets.STORAGE_ACCOUNT_NAME }}
       STORAGE_ACCESS_KEY: ${{ secrets.STORAGE_ACCESS_KEY }}
+      DBHOST: ${{ secrets.DBHOST }}
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
