@@ -12,22 +12,6 @@ services:
       - "5672"
       - "15672"
     restart: always
-  # db rest api
-  db-rest-api:
-    image: db-rest-api
-    build:
-      context: ./db-rest-api
-      dockerfile: Dockerfile
-    container_name: db-rest-api
-    ports:
-      - "9000:80"
-    environment:
-      - PORT=80
-      - DBHOST=mongodb://seotube-mongo:0PEWRLvlOPvHQw9iQUvX9pzKE5TLq8wawnWbABq4aA7qs2QIkapIHZUdIaBmCuFBGnbbFLc0OeipobSxPh3ISQ==@seotube-mongo.mongo.cosmos.azure.com:10255/?ssl=true&retrywrites=false&maxIdleTimeMS=120000&appName=@seotube-mongo@
-      - FIXTURES_DIR=fixtures
-    volumes:
-      - ./fixtures:/usr/src/app/fixtures:z
-    restart: always
 
   gateway:
     image: gateway
@@ -66,6 +50,7 @@ services:
       - NODE_ENV=development
     depends_on:
       - rabbit
+      - metadata
     restart: "no"
 
   history:
@@ -126,26 +111,26 @@ services:
       - STORAGE_ACCESS_KEY=fgJqZz3YOTFvIDmRSbwy10baV84Vy6ya1xE0qd3p1ruTcgTmwGoKJCS1yIiAFSpDk0rR8r86qo/S+AStSAejXQ==
     restart: "no"
 
-  # metadata:
-  #   image: metadata
-  #   build:
-  #     context: ./metadata
-  #     dockerfile: Dockerfile-dev
-  #   container_name: metadata
-  #   volumes:
-  #     - /tmp/metadata/npm-cache:/root/.npm:z
-  #     - ./metadata/src:/usr/src/app/src:z
-  #   ports:
-  #     - "4006:80"
-  #   environment:
-  #     - PORT=80
-  #     - RABBIT=amqp://guest:guest@rabbit:5672
-  #     - DBHOST=mongodb://seotube-mongo:0PEWRLvlOPvHQw9iQUvX9pzKE5TLq8wawnWbABq4aA7qs2QIkapIHZUdIaBmCuFBGnbbFLc0OeipobSxPh3ISQ==@seotube-mongo.mongo.cosmos.azure.com:10255/?ssl=true&retrywrites=false&maxIdleTimeMS=120000&appName=@seotube-mongo@
-  #     - DBNAME=metadata
-  #     - NODE_ENV=development
-  #   depends_on:
-  #     - rabbit
-  #   restart: "no"
+  metadata:
+    image: metadata
+    build:
+      context: ./metadata
+      dockerfile: Dockerfile-dev
+    container_name: metadata
+    volumes:
+      - /tmp/metadata/npm-cache:/root/.npm:z
+      - ./metadata/src:/usr/src/app/src:z
+    ports:
+      - "4006:80"
+    environment:
+      - PORT=80
+      - RABBIT=amqp://guest:guest@rabbit:5672
+      - DBHOST=mongodb://seotube-mongo:0PEWRLvlOPvHQw9iQUvX9pzKE5TLq8wawnWbABq4aA7qs2QIkapIHZUdIaBmCuFBGnbbFLc0OeipobSxPh3ISQ==@seotube-mongo.mongo.cosmos.azure.com:10255/?ssl=true&retrywrites=false&maxIdleTimeMS=120000&appName=@seotube-mongo@
+      - DBNAME=metadata
+      - NODE_ENV=development
+    depends_on:
+      - rabbit
+    restart: "no"
   # recommendations:
   #   image: recommendations
   #   build:
@@ -168,3 +153,19 @@ services:
   #     - db
   #     - rabbit
   #   restart: "no"
+  # db rest api
+  # db-rest-api:
+  #   image: db-rest-api
+  #   build:
+  #     context: ./db-rest-api
+  #     dockerfile: Dockerfile
+  #   container_name: db-rest-api
+  #   ports:
+  #     - "9000:80"
+  #   environment:
+  #     - PORT=80
+  #     - DBHOST=mongodb://seotube-mongo:0PEWRLvlOPvHQw9iQUvX9pzKE5TLq8wawnWbABq4aA7qs2QIkapIHZUdIaBmCuFBGnbbFLc0OeipobSxPh3ISQ==@seotube-mongo.mongo.cosmos.azure.com:10255/?ssl=true&retrywrites=false&maxIdleTimeMS=120000&appName=@seotube-mongo@
+  #     - FIXTURES_DIR=fixtures
+  #   volumes:
+  #     - ./fixtures:/usr/src/app/fixtures:z
+  #   restart: always
