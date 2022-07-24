@@ -28,3 +28,6 @@ variable storage_account_name {
 
 variable storage_access_key {
 }
+
+variable db_host {
+}

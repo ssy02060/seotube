@@ -3,7 +3,7 @@ locals {
     username = azurerm_container_registry.container_registry.admin_username
     password = azurerm_container_registry.container_registry.admin_password
     rabbit = "amqp://guest:guest@rabbit:5672"
-    database = "mongodb://db:27017"
+    database = var.db_host
 }
 
 module "gateway-microservice" {

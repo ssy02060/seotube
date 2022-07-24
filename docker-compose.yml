@@ -1,14 +1,6 @@
 version: '3'
 services:
   # mongodb
-  db:
-    image: mongo:4.2.8
-    container_name: db
-    ports:
-      - "27017:27017"
-    expose:
-      - "27017"
-    restart: always
 
   rabbit:
     image: rabbitmq:3.8.5-management
@@ -31,12 +23,10 @@ services:
       - "9000:80"
     environment:
       - PORT=80
-      - DBHOST=mongodb://db:27017
+      - DBHOST=mongodb://seotube-mongo:0PEWRLvlOPvHQw9iQUvX9pzKE5TLq8wawnWbABq4aA7qs2QIkapIHZUdIaBmCuFBGnbbFLc0OeipobSxPh3ISQ==@seotube-mongo.mongo.cosmos.azure.com:10255/?ssl=true&retrywrites=false&maxIdleTimeMS=120000&appName=@seotube-mongo@
       - FIXTURES_DIR=fixtures
     volumes:
       - ./fixtures:/usr/src/app/fixtures:z
-    depends_on:
-      - db
     restart: always
 
   gateway:
@@ -75,7 +65,6 @@ services:
       - RABBIT=amqp://guest:guest@rabbit:5672
       - NODE_ENV=development
     depends_on:
-      - db
       - rabbit
     restart: "no"
 
@@ -93,11 +82,10 @@ services:
     environment:
       - PORT=80
       - RABBIT=amqp://guest:guest@rabbit:5672
-      - DBHOST=mongodb://db:27017
+      - DBHOST=mongodb://seotube-mongo:0PEWRLvlOPvHQw9iQUvX9pzKE5TLq8wawnWbABq4aA7qs2QIkapIHZUdIaBmCuFBGnbbFLc0OeipobSxPh3ISQ==@seotube-mongo.mongo.cosmos.azure.com:10255/?ssl=true&retrywrites=false&maxIdleTimeMS=120000&appName=@seotube-mongo@
       - DBNAME=history
       - NODE_ENV=development
     depends_on:
-      - db
       - rabbit
     restart: "no"
 
@@ -152,11 +140,10 @@ services:
     environment:
       - PORT=80
       - RABBIT=amqp://guest:guest@rabbit:5672
-      - DBHOST=mongodb://db:27017
+      - DBHOST=mongodb://seotube-mongo:0PEWRLvlOPvHQw9iQUvX9pzKE5TLq8wawnWbABq4aA7qs2QIkapIHZUdIaBmCuFBGnbbFLc0OeipobSxPh3ISQ==@seotube-mongo.mongo.cosmos.azure.com:10255/?ssl=true&retrywrites=false&maxIdleTimeMS=120000&appName=@seotube-mongo@
       - DBNAME=metadata
       - NODE_ENV=development
     depends_on:
-      - db
       - rabbit
     restart: "no"
   # recommendations:
