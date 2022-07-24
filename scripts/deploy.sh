@@ -14,7 +14,7 @@ set -u # or set -o nounset
 
 cd ./scripts
 export KUBERNETES_SERVICE_HOST="" # Workaround for https://github.com/terraform-providers/terraform-provider-kubernetes/issues/679
-terraform init -migrate-state
+terraform init -reconfigure
 terraform apply -auto-approve \
     -var "app_version=$VERSION" \
     -var "client_id=$ARM_CLIENT_ID" \
