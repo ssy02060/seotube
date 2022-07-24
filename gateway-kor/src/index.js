@@ -182,6 +182,6 @@ function main() {
 main()
     .then(() => console.log("Microservice online."))
     .catch(err => {
-        console.error("Microservice failed to start.");
+        console.error("Microservice failed to start...");
         console.error(err && err.stack || err);
     });

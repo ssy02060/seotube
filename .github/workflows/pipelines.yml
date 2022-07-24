@@ -37,7 +37,7 @@ jobs:
       - name: Run a multi-line script
 
         run: |
-          GITHUB_VERSION=$(git rev-list --all --count)
-          export VERSION=$GITHUB_VERSION
+          
+          export VERSION=latest
 
           sh ./scripts/deploy.sh
