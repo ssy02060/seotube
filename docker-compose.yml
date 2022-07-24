@@ -21,8 +21,8 @@ services:
       - "15672"
     restart: always
   # db rest api
-  db-fixture-rest-api:
-    image: db-fixture-rest-api
+  db-rest-api:
+    image: db-rest-api
     build:
       context: ./db-fixture-rest-api
       dockerfile: Dockerfile
@@ -78,6 +78,29 @@ services:
       - db
       - rabbit
     restart: "no"
+
+  history:
+    image: history
+    build:
+      context: ./history
+      dockerfile: Dockerfile-dev
+    container_name: history
+    volumes:
+      - /tmp/history/npm-cache:/root/.npm:z
+      - ./history/src:/usr/src/app/src:z
+    ports:
+      - "4002:80"
+    environment:
+      - PORT=80
+      - RABBIT=amqp://guest:guest@rabbit:5672
+      - DBHOST=mongodb://db:27017
+      - DBNAME=history
+      - NODE_ENV=development
+    depends_on:
+      - db
+      - rabbit
+    restart: "no"
+
   video-upload:
     image: video-upload
     build:
@@ -113,28 +136,6 @@ services:
       - PORT=80
       - STORAGE_ACCOUNT_NAME=ssystrg
       - STORAGE_ACCESS_KEY=fgJqZz3YOTFvIDmRSbwy10baV84Vy6ya1xE0qd3p1ruTcgTmwGoKJCS1yIiAFSpDk0rR8r86qo/S+AStSAejXQ==
-    restart: "no"
-
-  history:
-    image: history
-    build:
-      context: ./history
-      dockerfile: Dockerfile-dev
-    container_name: history
-    volumes:
-      - /tmp/history/npm-cache:/root/.npm:z
-      - ./history/src:/usr/src/app/src:z
-    ports:
-      - "4002:80"
-    environment:
-      - PORT=80
-      - RABBIT=amqp://guest:guest@rabbit:5672
-      - DBHOST=mongodb://db:27017
-      - DBNAME=history
-      - NODE_ENV=development
-    depends_on:
-      - db
-      - rabbit
     restart: "no"
 
   metadata:

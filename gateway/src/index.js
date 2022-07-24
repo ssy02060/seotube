@@ -8,7 +8,7 @@ const http = require("http");
 function setupHandlers(app) {
     app.set("views", path.join(__dirname, "views")); // Set directory that contains templates for views.
     app.set("view engine", "hbs"); // Use hbs as the view engine for Express.
-    
+
     app.use(express.static("public"));
 
     //
@@ -64,7 +64,7 @@ function setupHandlers(app) {
                         metadata,
                         url: `/api/video?id=${videoId}`,
                     };
-                    
+
                     // Renders the video for display in the browser.
                     res.render("play-video", { video });
                 });
@@ -119,19 +119,19 @@ function setupHandlers(app) {
     // HTTP GET API to stream video to the user's browser.
     //
     app.get("/api/video", (req, res) => {
-        
+
         const forwardRequest = http.request( // Forward the request to the video streaming microservice.
             {
                 host: `video-streaming`,
                 path: `/video?id=${req.query.id}`,
                 method: 'GET',
-            }, 
+            },
             forwardResponse => {
                 res.writeHeader(forwardResponse.statusCode, forwardResponse.headers);
                 forwardResponse.pipe(res);
             }
         );
-        
+
         req.pipe(forwardRequest);
     });
 
@@ -146,13 +146,13 @@ function setupHandlers(app) {
                 path: `/upload`,
                 method: 'POST',
                 headers: req.headers,
-            }, 
+            },
             forwardResponse => {
                 res.writeHeader(forwardResponse.statusCode, forwardResponse.headers);
                 forwardResponse.pipe(res);
             }
         );
-        
+
         req.pipe(forwardRequest);
     });
 }
