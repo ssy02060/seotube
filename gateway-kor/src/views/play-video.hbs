@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
 
-    <title>SeoTube: Play video</title>
+    <title>SeoTube: 영상 재생</title>
 
     <link rel="stylesheet" href="css/tailwind.min.css">
     <link rel="stylesheet" href="css/app.css">
@@ -18,20 +18,20 @@
                     SeoTube
                 </div>
                 <div class="ml-16">
-                    <a href="/">Videos</a>
+                    <a href="/">영상</a>
+                </div>
+                <div class="ml-4 border-b-2 border-blue-600">
+                    <a href="/upload">업로드</a>
                 </div>
                 <div class="ml-4">
-                    <a href="/upload">Upload</a>
-                </div>
-                <div class="ml-4">
-                    <a href="/history">History</a>
+                    <a href="/history">시청 기록</a>
                 </div>
             </div>
         </div>
     </div>
 
     <div class="m-4">
-        <h1>Playing {{video.metadata.name}}</h1>
+        <h1>재생 {{video.metadata.name}}</h1>
         <div class="m-4">
             <video controls autoplay muted>
                 <source src={{video.url}} type="video/mp4">

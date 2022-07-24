@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
 
-    <title>SeoTube: Play video</title>
+    <title>SeoTube: Home</title>
 
     <link rel="stylesheet" href="css/tailwind.min.css">
     <link rel="stylesheet" href="css/app.css">
@@ -17,26 +17,31 @@
                 <div class="text-xl font-bold">
                     SeoTube
                 </div>
-                <div class="ml-16">
-                    <a href="/">Videos</a>
+                <div class="ml-16 border-b-2 border-blue-600">
+                    <a href="/">영상</a>
                 </div>
                 <div class="ml-4">
-                    <a href="/upload">Upload</a>
+                    <a href="/upload">업로드</a>
                 </div>
                 <div class="ml-4">
-                    <a href="/history">History</a>
+                    <a href="/history">시청 기록</a>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="m-4">
-        <h1>Playing {{video.metadata.name}}</h1>
         <div class="m-4">
-            <video controls autoplay muted>
-                <source src={{video.url}} type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
+            <h1>영상 목록</h1>
+            <div id="video-list" class="m-4">
+                {{#if videos}}
+                {{#each videos}}
+                <div class="mt-1">
+                    <a href="/video?id={{this._id}}">{{this.name}}</a>
+                </div>
+                {{/each}}
+                {{else}}
+                아직 영상이 없습니다.
+                {{/if}}
+            </div>
         </div>
     </div>
 </body>

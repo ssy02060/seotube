@@ -20,6 +20,20 @@ module "gateway-microservice" {
     }
 }
 
+module "gateway-kor-microservice" {
+    source ="./modules/microservice"
+    service_name = "gateway-kor"
+    service_type = "LoadBalancer"
+    session_affinity = "ClientIP"
+    login_server = local.login_server
+    username = local.username
+    password = local.password
+    app_version = var.app_version
+    env = {
+        RABBIT: local.rabbit
+    }
+}
+
 module "video-streaming-microservice" {
     source ="./modules/microservice"
     service_name = "video-streaming"
