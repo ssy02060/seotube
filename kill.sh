@@ -1,3 +1,3 @@
-docker-compose kill
-docker rm -vf $(docker ps -aq)
-docker rmi $(docker images | grep "^<none>" | awk "{print $3}")
+sudo docker-compose kill
+sudo docker rm -vf $(docker ps -aq)
+sudo docker rmi $(docker images | grep "^<none>" | awk "{print $3}")
